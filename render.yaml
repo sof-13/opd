@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: opd
+    env: java
+    buildCommand: mvn clean package
+    startCommand: java -jar target/opd-1.0-SNAPSHOT.jar
+    plan: free
