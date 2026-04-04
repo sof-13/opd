@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат викторины</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="quiz-final-result-container">
+    <div class="result-score-circle">
+        <span class="result-score" th:text="${totalScore}">0</span>
+        <span class="result-score-label">баллов</span>
+    </div>
+
+    <h1 class="result-title" th:text="${engineerType}">Тип инженера</h1>
+
+    <div class="result-image">
+        <img th:src="${image}" alt="Инженер" class="result-image-img">
+    </div>
+
+    <p class="result-description" th:text="${description}">Описание</p>
+
+    <div class="result-advice">
+        <h3>💡 Совет:</h3>
+        <p th:text="${advice}">Совет</p>
+    </div>
+
+    <div class="result-buttons">
+        <a href="/" class="home-btn">На главное меню</a>
+        <a href="/quiz" class="home-btn retry-btn">Пройти заново</a>
+    </div>
+</div>
+</body>
+</html>

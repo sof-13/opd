@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Факты: Вопрос</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="question-container">
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill"
+                 th:style="'width: ' + (${currentQuestion} * 100 / ${totalQuestions}) + '%'">
+            </div>
+        </div>
+        <div class="progress-text">
+            <span th:text="${currentQuestion}">1</span> из <span th:text="${totalQuestions}">10</span>
+        </div>
+    </div>
+
+    <div class="question-header">
+        <h1 class="question-text" th:text="${questionText}">Текст вопроса</h1>
+    </div>
+
+    <div class="question-body">
+        <div class="question-image">
+            <img th:src="${imageUrl}" alt="Иллюстрация к вопросу" id="questionImage">
+        </div>
+
+        <div class="choices-container" id="choicesContainer">
+            <button onclick="checkAnswer(false)" class="choice-btn myth">Миф</button>
+            <button onclick="checkAnswer(true)" class="choice-btn reality">Реальность</button>
+        </div>
+
+        <div class="result-section" id="resultSection" style="display: none;">
+            <div class="result-icon" id="resultIcon"></div>
+            <h2 class="result-title" id="resultTitle"></h2>
+
+            <button onclick="showDetails()" class="details-btn" id="detailsBtn">
+                Подробнее
+            </button>
+
+            <div class="description-container" id="descriptionContainer" style="display: none;">
+                <div class="description-text" th:text="${description}">
+                    Описание факта
+                </div>
+
+                <div class="navigation-buttons">
+                    <a th:if="${!isLastQuestion}"
+                       th:href="@{/facts(index=${nextIndex}, isNewGame=false)}"
+                       class="next-btn">Следующий вопрос</a>
+
+                    <a th:if="${isLastQuestion}"
+                       href="/facts/complete"
+                       class="next-btn complete-btn">Завершить викторину</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="exit-section" th:if="${showExitButton}">
+        <a href="/facts/early-exit" class="exit-btn">Завершить сейчас</a>
+    </div>
+</div>
+
+<script>
+    const isMyth = [[${isMyth}]];
+
+    function checkAnswer(userSaysReality) {
+        document.getElementById('choicesContainer').style.display = 'none';
+
+        const resultSection = document.getElementById('resultSection');
+        resultSection.style.display = 'block';
+
+        const resultIcon = document.getElementById('resultIcon');
+        const resultTitle = document.getElementById('resultTitle');
+
+        const isCorrect = (isMyth && !userSaysReality) || (!isMyth && userSaysReality);
+
+        if (isCorrect) {
+            resultTitle.textContent = 'Правильно!';
+            resultTitle.className = 'result-title correct';
+        } else {
+            resultTitle.textContent = 'Неправильно';
+            resultTitle.className = 'result-title incorrect';
+        }
+
+        const img = document.getElementById('questionImage');
+        img.style.border = isCorrect ? '5px solid #2ecc71' : '5px solid #e74c3c';
+        img.style.borderRadius = '20px';
+    }
+
+    function showDetails() {
+        document.getElementById('detailsBtn').style.display = 'none';
+        document.getElementById('descriptionContainer').style.display = 'block';
+
+        document.getElementById('descriptionContainer').scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }
+</script>
+</body>
+</html>

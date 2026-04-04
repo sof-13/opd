@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Викторина: Вопрос</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="quiz-container">
+    <div class="quiz-header">
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill"
+                     th:style="'width: ' + (${currentQuestion} * 100 / ${totalQuestions}) + '%'">
+                </div>
+            </div>
+            <div class="progress-text">
+                Вопрос <span th:text="${currentQuestion}">1</span> из <span th:text="${totalQuestions}">5</span>
+            </div>
+        </div>
+
+        <div class="score-counter">
+            <span class="score-label">Твои баллы:</span>
+            <span class="score-value" th:text="${currentScore}">0</span>
+        </div>
+    </div>
+
+    <div class="quiz-question-section">
+        <h2 class="quiz-problem-title">Проблема:</h2>
+        <p class="quiz-problem-text" th:text="${problem}">Текст проблемы</p>
+    </div>
+
+    <div class="quiz-answers-section">
+        <form th:action="@{/quiz/answer}" method="post">
+            <input type="hidden" name="questionIndex" th:value="${questionIndex}">
+
+            <div class="answers-grid">
+                <label class="answer-card">
+                    <input type="radio" name="selectedOption" th:value="${option1Key}" required>
+                    <div class="answer-content">
+                        <span class="answer-letter">А</span>
+                        <p class="answer-text" th:text="${option1Text}">Текст ответа</p>
+                    </div>
+                </label>
+
+                <label class="answer-card">
+                    <input type="radio" name="selectedOption" th:value="${option2Key}" required>
+                    <div class="answer-content">
+                        <span class="answer-letter">Б</span>
+                        <p class="answer-text" th:text="${option2Text}">Текст ответа</p>
+                    </div>
+                </label>
+
+                <label class="answer-card">
+                    <input type="radio" name="selectedOption" th:value="${option3Key}" required>
+                    <div class="answer-content">
+                        <span class="answer-letter">В</span>
+                        <p class="answer-text" th:text="${option3Text}">Текст ответа</p>
+                    </div>
+                </label>
+
+                <label class="answer-card">
+                    <input type="radio" name="selectedOption" th:value="${option4Key}" required>
+                    <div class="answer-content">
+                        <span class="answer-letter">Г</span>
+                        <p class="answer-text" th:text="${option4Text}">Текст ответа</p>
+                    </div>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-answer-btn">Выбрать ответ →</button>
+        </form>
+
+        <div class="exit-quiz-section">
+            <a href="/quiz/exit" class="exit-quiz-btn">Завершить викторину</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

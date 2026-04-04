@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат ответа</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="quiz-result-container">
+    <div class="answer-result-card">
+        <div class="result-header">
+            <h2>Твой выбор:</h2>
+            <p class="selected-answer" th:text="${optionText}">Текст выбранного ответа</p>
+        </div>
+
+        <div class="points-circle" th:class="${points >= 15} ? 'points-high' : 'points-low'">
+            <span class="points-value" th:text="${points}">0</span>
+            <span class="points-label">баллов</span>
+        </div>
+
+        <div class="explanation-section">
+            <h3>💡 Пояснение:</h3>
+            <p class="explanation-text" th:text="${explanation}">Текст пояснения</p>
+        </div>
+
+        <div class="score-update">
+            <span>Общий счёт:</span>
+            <span class="total-score" th:text="${newScore}">0</span>
+        </div>
+
+        <a th:href="@{/quiz/next}" class="next-question-btn">
+            <span th:if="${questionIndex < totalQuestions - 1}">Следующий вопрос</span>
+            <span th:if="${questionIndex >= totalQuestions - 1}">Узнать результат</span>
+        </a>
+    </div>
+</div>
+</body>
+</html>

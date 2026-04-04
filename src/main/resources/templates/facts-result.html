@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="result-container">
+
+    <h1 class="result-title"
+        th:classappend="${isCorrect} ? 'correct' : 'incorrect'"
+        th:text="${isCorrect} ? 'Правильно!' : 'Неправильно'">
+    </h1>
+
+    <p class="result-text"
+       th:text="${isCorrect} ? 'Вы отлично разбираетесь в инженерии!' : 'Не беда, инженерия — это интересно, давайте учиться вместе!'">
+    </p>
+
+    <a th:if="${!isLastQuestion}"
+       th:href="@{/facts(question=${nextQuestion})}"
+       class="continue-btn">Продолжить</a>
+
+    <a th:if="${isLastQuestion}"
+       href="/facts/complete"
+       class="continue-btn complete-btn">Завершить викторину</a>
+</div>
+</body>
+</html>
