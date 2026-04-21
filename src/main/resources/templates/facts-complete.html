@@ -2,16 +2,19 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Викторина завершена</title>
+    <title>Факты пройдены</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="complete-container">
-    <h1 class="complete-title">Все факты пройдены!</h1>
-    <p class="complete-text">Поздравляем! Вы успешно прошли все факты об инженерах!</p>
+    <div class="complete-icon">🎉</div>
+    <h1 class="complete-title">Поздравляем!</h1>
+    <p class="complete-text">Вы успешно прошли все 10 фактов об инженерах!</p>
 
-    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-        <a href="/facts" class="home-btn">Начать заново</a>
+    <p class="complete-text">Отличная работа! Теперь можно передохнуть и набраться сил.</p>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+        <a href="/facts" class="home-btn">Ещё факты</a>
         <a href="/" class="home-btn" style="background-color: #333;">На главное меню</a>
     </div>
 </div>

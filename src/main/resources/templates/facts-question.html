@@ -48,11 +48,11 @@
                 <div class="navigation-buttons">
                     <a th:if="${!isLastQuestion}"
                        th:href="@{/facts(index=${nextIndex}, isNewGame=false)}"
-                       class="next-btn">Следующий вопрос</a>
+                       class="next-btn">Следующий факт</a>
 
                     <a th:if="${isLastQuestion}"
                        href="/facts/complete"
-                       class="next-btn complete-btn">Завершить викторину</a>
+                       class="next-btn complete-btn">Завершить</a>
                 </div>
             </div>
         </div>

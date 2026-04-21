@@ -18,6 +18,9 @@ import java.util.*;
 @Controller
 public class MainController {
 
+    private static final int FACTS_PER_GAME = 10;
+    private static final int QUIZ_QUESTIONS_PER_GAME = 5;
+
     @GetMapping("/")
     public String index() { return "index"; }
 
@@ -32,19 +35,25 @@ public class MainController {
             ClassPathResource resource = new ClassPathResource("static/data/facts.json");
             InputStream inputStream = resource.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode factsArray = mapper.readTree(inputStream);
+            JsonNode allFacts = mapper.readTree(inputStream);
 
             @SuppressWarnings("unchecked")
             List<JsonNode> shuffledFacts = (List<JsonNode>) session.getAttribute("shuffledFacts");
 
             if (shuffledFacts == null || isNewGame) {
-                shuffledFacts = new ArrayList<>();
-                for (JsonNode fact : factsArray) { shuffledFacts.add(fact); }
-                Collections.shuffle(shuffledFacts);
+                // Берём все 30 фактов и перемешиваем
+                List<JsonNode> allFactsList = new ArrayList<>();
+                for (JsonNode fact : allFacts) {
+                    allFactsList.add(fact);
+                }
+                Collections.shuffle(allFactsList);
+                // Берём первые FACTS_PER_GAME (10) фактов
+                shuffledFacts = allFactsList.subList(0, Math.min(FACTS_PER_GAME, allFactsList.size()));
                 session.setAttribute("shuffledFacts", shuffledFacts);
+                session.setAttribute("totalFactsCount", shuffledFacts.size());
             }
 
-            int totalQuestions = shuffledFacts.size();
+            int totalQuestions = (Integer) session.getAttribute("totalFactsCount");
             int currentIndex = index >= totalQuestions ? 0 : index;
             JsonNode currentFact = shuffledFacts.get(currentIndex);
 
@@ -68,12 +77,14 @@ public class MainController {
     @GetMapping("/facts/early-exit")
     public String factsEarlyExit(HttpSession session) {
         session.removeAttribute("shuffledFacts");
+        session.removeAttribute("totalFactsCount");
         return "facts-early-exit";
     }
 
     @GetMapping("/facts/complete")
     public String factsComplete(HttpSession session) {
         session.removeAttribute("shuffledFacts");
+        session.removeAttribute("totalFactsCount");
         return "facts-complete";
     }
 
@@ -85,6 +96,7 @@ public class MainController {
         session.removeAttribute("lastQuestionIndex");
         session.removeAttribute("shuffledOptions");
         session.removeAttribute("shuffledQuestions");
+        session.removeAttribute("selectedQuestionIndices");
         session.setAttribute("quizScore", 0);
         session.setAttribute("quizQuestionIndex", 0);
         return "redirect:/quiz/question";
@@ -96,18 +108,22 @@ public class MainController {
             ClassPathResource resource = new ClassPathResource("static/data/quiz.json");
             InputStream inputStream = resource.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode quizArray = mapper.readTree(inputStream);
+            JsonNode allQuestions = mapper.readTree(inputStream);
 
             @SuppressWarnings("unchecked")
             List<JsonNode> shuffledQuestions = (List<JsonNode>) session.getAttribute("shuffledQuestions");
 
             if (shuffledQuestions == null) {
-                shuffledQuestions = new ArrayList<>();
-                for (JsonNode q : quizArray) {
-                    shuffledQuestions.add(q);
+                // Берём все 30 вопросов
+                List<JsonNode> allQuestionsList = new ArrayList<>();
+                for (JsonNode q : allQuestions) {
+                    allQuestionsList.add(q);
                 }
-                Collections.shuffle(shuffledQuestions);
+                Collections.shuffle(allQuestionsList);
+                // Берём первые QUIZ_QUESTIONS_PER_GAME (5) вопросов
+                shuffledQuestions = allQuestionsList.subList(0, Math.min(QUIZ_QUESTIONS_PER_GAME, allQuestionsList.size()));
                 session.setAttribute("shuffledQuestions", shuffledQuestions);
+                session.setAttribute("totalQuizQuestions", shuffledQuestions.size());
             }
 
             Integer questionIndex = (Integer) session.getAttribute("quizQuestionIndex");
@@ -116,7 +132,7 @@ public class MainController {
                 session.setAttribute("quizQuestionIndex", 0);
             }
 
-            int totalQuestions = shuffledQuestions.size();
+            int totalQuestions = (Integer) session.getAttribute("totalQuizQuestions");
             if (questionIndex >= totalQuestions) {
                 return "redirect:/quiz/result";
             }
@@ -124,14 +140,10 @@ public class MainController {
             JsonNode currentQuestion = shuffledQuestions.get(questionIndex);
             JsonNode options = currentQuestion.get("options");
 
-            @SuppressWarnings("unchecked")
-            List<String> shuffledOptions = (List<String>) session.getAttribute("shuffledOptions");
-
-            if (shuffledOptions == null || questionIndex == 0) {
-                shuffledOptions = new ArrayList<>(Arrays.asList("A", "B", "C", "D"));
-                Collections.shuffle(shuffledOptions);
-                session.setAttribute("shuffledOptions", shuffledOptions);
-            }
+            // Создаём список вариантов и перемешиваем их
+            List<String> optionKeys = new ArrayList<>(Arrays.asList("A", "B", "C", "D"));
+            Collections.shuffle(optionKeys);
+            session.setAttribute("shuffledOptions", optionKeys);
 
             model.addAttribute("questionIndex", questionIndex);
             model.addAttribute("totalQuestions", totalQuestions);
@@ -139,14 +151,14 @@ public class MainController {
             model.addAttribute("problem", currentQuestion.get("problem").asText());
 
             // Передаём варианты в рандомном порядке
-            model.addAttribute("option1Key", shuffledOptions.get(0));
-            model.addAttribute("option1Text", options.get(shuffledOptions.get(0)).get("text").asText());
-            model.addAttribute("option2Key", shuffledOptions.get(1));
-            model.addAttribute("option2Text", options.get(shuffledOptions.get(1)).get("text").asText());
-            model.addAttribute("option3Key", shuffledOptions.get(2));
-            model.addAttribute("option3Text", options.get(shuffledOptions.get(2)).get("text").asText());
-            model.addAttribute("option4Key", shuffledOptions.get(3));
-            model.addAttribute("option4Text", options.get(shuffledOptions.get(3)).get("text").asText());
+            model.addAttribute("option1Key", optionKeys.get(0));
+            model.addAttribute("option1Text", options.get(optionKeys.get(0)).get("text").asText());
+            model.addAttribute("option2Key", optionKeys.get(1));
+            model.addAttribute("option2Text", options.get(optionKeys.get(1)).get("text").asText());
+            model.addAttribute("option3Key", optionKeys.get(2));
+            model.addAttribute("option3Text", options.get(optionKeys.get(2)).get("text").asText());
+            model.addAttribute("option4Key", optionKeys.get(3));
+            model.addAttribute("option4Text", options.get(optionKeys.get(3)).get("text").asText());
 
             Integer currentScore = (Integer) session.getAttribute("quizScore");
             model.addAttribute("currentScore", currentScore != null ? currentScore : 0);
@@ -200,7 +212,7 @@ public class MainController {
             model.addAttribute("optionText", optionText);
             model.addAttribute("newScore", newScore);
             model.addAttribute("questionIndex", questionIndex);
-            model.addAttribute("totalQuestions", shuffledQuestions.size());
+            model.addAttribute("totalQuestions", (Integer) session.getAttribute("totalQuizQuestions"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,10 +227,6 @@ public class MainController {
         if (questionIndex == null) { questionIndex = 0; }
         questionIndex++;
         session.setAttribute("quizQuestionIndex", questionIndex);
-
-        List<String> shuffledOptions = new ArrayList<>(Arrays.asList("A", "B", "C", "D"));
-        Collections.shuffle(shuffledOptions);
-        session.setAttribute("shuffledOptions", shuffledOptions);
 
         session.removeAttribute("lastSelectedOption");
         session.removeAttribute("lastQuestionIndex");
@@ -269,6 +277,7 @@ public class MainController {
         session.removeAttribute("quizQuestionIndex");
         session.removeAttribute("shuffledOptions");
         session.removeAttribute("shuffledQuestions");
+        session.removeAttribute("totalQuizQuestions");
 
         return "quiz-result";
     }

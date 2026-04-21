@@ -2,15 +2,242 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>О проекте</title>
+    <title>Об учебном центре</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .about-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e0e5ec 100%);
+        }
+
+        .about-card {
+            max-width: 1000px;
+            width: 100%;
+            background: #fff;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-header {
+            background: linear-gradient(135deg, #1a3a5c 0%, #2c5a7a 100%);
+            padding: 40px 40px 30px;
+            text-align: center;
+        }
+
+        .about-header h1 {
+            color: #fff;
+            font-size: 32px;
+            margin: 0 0 10px;
+            font-weight: 700;
+        }
+
+        .about-header .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .about-content {
+            padding: 40px;
+        }
+
+        .full-width-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .highlight-box {
+            background: #f0f7ff;
+            border-left: 4px solid #2c5a7a;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1a3a5c;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: #2c5a7a;
+            font-size: 18px;
+            margin: 0 0 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p {
+            margin: 0;
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .contact-section {
+            background: #e8f0f7;
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .contact-section h3 {
+            color: #1a3a5c;
+            font-size: 18px;
+            margin: 0 0 15px;
+            font-weight: 600;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .contact-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .contact-item p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .contact-item strong {
+            color: #1a3a5c;
+        }
+
+        .work-hours {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            color: #555;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #1a3a5c 0%, #2c5a7a 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #234f6e 0%, #3a6d8f 100%);
+        }
+
+        @media (max-width: 700px) {
+            .about-content { padding: 25px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .contact-details { flex-direction: column; gap: 10px; }
+            .about-header h1 { font-size: 26px; }
+        }
+    </style>
 </head>
 <body>
 <div class="about-container">
-    <h1 class="about-title">Эту красоту для вас мы подготовили</h1>
-    <p class="about-text">И пока всё!</p>
+    <div class="about-card">
+        <div class="about-header">
+            <h1>Авиационный учебный центр</h1>
+            <p class="subtitle">АО «ОДК-Климов»</p>
+        </div>
 
-    <a href="/" class="home-btn">На главное меню</a>
+        <div class="about-content">
+            <div class="full-width-text">
+                Авиационный учебный центр АО «ОДК-Климов» — это возможность получить знания от ведущих разработчиков
+                авиационных двигателей. Обучение проводят действующие конструкторы и технологи, которые создают
+                и сертифицируют технику для самолётов и вертолётов. Программы центра основаны на реальной эксплуатационной
+                документации и актуальном опыте эксплуатации двигателей по всему миру.
+            </div>
+
+            <div class="highlight-box">
+                <p>Практические занятия проходят на макетах двигателей с использованием 3D-моделей,
+                    технологий дополненной реальности и современных эндоскопов. По итогам обучения выдаётся
+                    удостоверение установленного образца. Занятия возможны как на базе центра в Санкт-Петербурге,
+                    так и на территории заказчика.</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📍 Адрес</h3>
+                    <p>197375, Россия, г. Санкт-Петербург<br>ул. Академика Харитона, д. 8</p>
+                </div>
+                <div class="info-card">
+                    <h3>📧 Email</h3>
+                    <p>auc@klimov.ru</p>
+                </div>
+                <div class="info-card">
+                    <h3>📞 Телефон</h3>
+                    <p>+7 (812) 454-72-03</p>
+                </div>
+                <div class="info-card">
+                    <h3>🕐 Режим работы</h3>
+                    <p>пн–пт: 9:00 – 17:30<br>сб–вс: выходные дни</p>
+                </div>
+            </div>
+
+            <a href="/" class="home-btn">← На главное меню</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

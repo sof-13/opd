@@ -4,9 +4,42 @@
     <meta charset="UTF-8">
     <title>Зачем нужны инженеры</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .gear-info {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .gear-info span {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.8);
+            padding: 4px 10px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .gear-info:hover span {
+            color: #2c5a7a;
+            background: rgba(255,255,255,0.95);
+            transform: scale(1.05);
+        }
+        @media (max-width: 900px) {
+            .gear-info { top: 15px; right: 15px; }
+            .gear-info span { font-size: 11px; padding: 3px 8px; }
+        }
+    </style>
 </head>
 <body>
-<a href="/about" class="gear-link">
+<a href="/about" class="gear-info">
     <div class="gear">
         <div class="gear-tooth"></div>
         <div class="gear-tooth"></div>
@@ -19,6 +52,7 @@
         <div class="gear-body"></div>
         <div class="gear-center"></div>
     </div>
+    <span>ИНФО</span>
 </a>
 
 <div class="header-section">
