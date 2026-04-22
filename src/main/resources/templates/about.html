@@ -2,8 +2,8 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Об учебном центре</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>АО «ОДК-Климов»</title>
+    <link rel="stylesheet" href="/css/style.css?v=10">
     <style>
         .about-container {
             min-height: 100vh;
@@ -36,140 +36,125 @@
             }
         }
 
-        .about-header {
-            background: linear-gradient(135deg, #1a3a5c 0%, #2c5a7a 100%);
-            padding: 40px 40px 30px;
-            text-align: center;
-        }
-
-        .about-header h1 {
-            color: #fff;
-            font-size: 32px;
-            margin: 0 0 10px;
-            font-weight: 700;
-        }
-
-        .about-header .subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 18px;
-            margin: 0;
-        }
-
         .about-content {
-            padding: 40px;
+            padding: 50px 40px;
         }
 
-        .full-width-text {
+        /* Заголовок по центру большими буквами */
+        .main-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-title h1 {
+            font-size: 48px;
+            color: #06325f;
+            margin: 0 0 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .main-title .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #06325f, #7f9ab7);
+            margin: 0 auto;
+        }
+
+        /* Описание компании */
+        .company-description {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+
+        .company-description p {
             font-size: 16px;
             line-height: 1.7;
-            color: #333;
-            margin-bottom: 25px;
-            text-align: left;
-            width: 100%;
-        }
-
-        .highlight-box {
-            background: #f0f7ff;
-            border-left: 4px solid #2c5a7a;
-            padding: 20px 25px;
-            border-radius: 12px;
-            margin: 25px 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .highlight-box p {
+            color: #42424d;
             margin: 0;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #1a3a5c;
         }
 
+        /* Заголовок "Свяжитесь с нами" */
+        .contact-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-title h2 {
+            font-size: 28px;
+            color: #06325f;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        .contact-title .divider {
+            width: 60px;
+            height: 2px;
+            background: #7f9ab7;
+            margin: 0 auto;
+        }
+
+        /* Три красивых блока */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin: 30px 0;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 20px;
         }
 
         .info-card {
             background: #f8f9fa;
-            border-radius: 16px;
-            padding: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 20px;
+            padding: 30px 20px;
+            transition: all 0.3s;
+            text-align: center;
+            border: 1px solid #e8e8f0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
 
         .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(6, 50, 95, 0.15);
+            border-color: #7f9ab7;
+        }
+
+        .info-card .icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #42424d;
         }
 
         .info-card h3 {
-            color: #2c5a7a;
+            color: #06325f;
             font-size: 18px;
-            margin: 0 0 15px;
+            margin: 0 0 12px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .info-card p {
-            margin: 0;
+            margin: 5px 0;
             font-size: 15px;
-            color: #555;
+            color: #42424d;
             line-height: 1.5;
         }
 
-        .contact-section {
-            background: #e8f0f7;
-            border-radius: 16px;
-            padding: 25px;
-            margin-top: 20px;
+        .info-card .phone {
+            font-size: 16px;
+            font-weight: bold;
+            color: #06325f;
         }
 
-        .contact-section h3 {
-            color: #1a3a5c;
-            font-size: 18px;
-            margin: 0 0 15px;
-            font-weight: 600;
-        }
-
-        .contact-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-        }
-
-        .contact-item {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .contact-item p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #444;
-        }
-
-        .contact-item strong {
-            color: #1a3a5c;
-        }
-
-        .work-hours {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            font-size: 14px;
-            color: #555;
+        .info-card .email {
+            font-size: 15px;
+            color: #7f9ab7;
         }
 
         .home-btn {
             display: inline-block;
-            margin-top: 30px;
+            margin-top: 40px;
             padding: 14px 40px;
-            background: linear-gradient(135deg, #1a3a5c 0%, #2c5a7a 100%);
+            background: linear-gradient(135deg, #06325f 0%, #7f9ab7 100%);
             color: #fff;
             text-decoration: none;
             border-radius: 40px;
@@ -182,60 +167,61 @@
         .home-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(135deg, #234f6e 0%, #3a6d8f 100%);
         }
 
         @media (max-width: 700px) {
-            .about-content { padding: 25px; }
-            .info-grid { grid-template-columns: 1fr; }
-            .contact-details { flex-direction: column; gap: 10px; }
-            .about-header h1 { font-size: 26px; }
+            .about-content { padding: 30px 25px; }
+            .info-grid { grid-template-columns: 1fr; gap: 20px; }
+            .main-title h1 { font-size: 32px; }
+            .contact-title h2 { font-size: 24px; }
+            .info-card .icon { font-size: 28px; }
         }
     </style>
 </head>
 <body>
 <div class="about-container">
     <div class="about-card">
-        <div class="about-header">
-            <h1>Авиационный учебный центр</h1>
-            <p class="subtitle">АО «ОДК-Климов»</p>
-        </div>
-
         <div class="about-content">
-            <div class="full-width-text">
-                Авиационный учебный центр АО «ОДК-Климов» — это возможность получить знания от ведущих разработчиков
-                авиационных двигателей. Обучение проводят действующие конструкторы и технологи, которые создают
-                и сертифицируют технику для самолётов и вертолётов. Программы центра основаны на реальной эксплуатационной
-                документации и актуальном опыте эксплуатации двигателей по всему миру.
+            <!-- АО «ОДК-Климов» большими буквами по центру -->
+            <div class="main-title">
+                <h1>АО «ОДК-Климов»</h1>
+                <div class="divider"></div>
             </div>
 
-            <div class="highlight-box">
-                <p>Практические занятия проходят на макетах двигателей с использованием 3D-моделей,
-                    технологий дополненной реальности и современных эндоскопов. По итогам обучения выдаётся
-                    удостоверение установленного образца. Занятия возможны как на базе центра в Санкт-Петербурге,
-                    так и на территории заказчика.</p>
+            <!-- Описание компании обычным шрифтом -->
+            <div class="company-description">
+                <p>АО «ОДК-Климов» — ведущий российский разработчик газотурбинных двигателей, который занимается серийным производством и сервисным сопровождением газотурбинных двигателей для авиационной техники. Основан в 1914 году.</p>
             </div>
 
+            <!-- Свяжитесь с нами -->
+            <div class="contact-title">
+                <h2>Свяжитесь с нами</h2>
+                <div class="divider"></div>
+            </div>
+
+            <!-- Три красивых блока с черно-белыми иконками -->
             <div class="info-grid">
                 <div class="info-card">
-                    <h3>📍 Адрес</h3>
-                    <p>197375, Россия, г. Санкт-Петербург<br>ул. Академика Харитона, д. 8</p>
+                    <div class="icon">⌂</div>
+                    <h3>Адрес</h3>
+                    <p>г. Санкт-Петербург<br>ул. Академика Харитона д. 8</p>
                 </div>
                 <div class="info-card">
-                    <h3>📧 Email</h3>
-                    <p>auc@klimov.ru</p>
+                    <div class="icon">✉</div>
+                    <h3>Email</h3>
+                    <p class="email">distant@klimov.ru</p>
                 </div>
                 <div class="info-card">
-                    <h3>📞 Телефон</h3>
-                    <p>+7 (812) 454-72-03</p>
-                </div>
-                <div class="info-card">
-                    <h3>🕐 Режим работы</h3>
-                    <p>пн–пт: 9:00 – 17:30<br>сб–вс: выходные дни</p>
+                    <div class="icon">☎</div>
+                    <h3>Телефон</h3>
+                    <p class="phone">+7 (812) 454 72 03</p>
                 </div>
             </div>
 
-            <a href="/" class="home-btn">← На главное меню</a>
+            <!-- Кнопка назад -->
+            <div style="text-align: center;">
+                <a href="/" class="home-btn">← На главное меню</a>
+            </div>
         </div>
     </div>
 </div>

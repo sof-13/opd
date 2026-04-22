@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Факты: Вопрос</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body>
 <div class="question-container">
@@ -80,13 +80,15 @@
         if (isCorrect) {
             resultTitle.textContent = 'Правильно!';
             resultTitle.className = 'result-title correct';
+            resultIcon.textContent = '✓';
         } else {
             resultTitle.textContent = 'Неправильно';
             resultTitle.className = 'result-title incorrect';
+            resultIcon.textContent = '✗';
         }
 
         const img = document.getElementById('questionImage');
-        img.style.border = isCorrect ? '5px solid #2ecc71' : '5px solid #e74c3c';
+        img.style.border = isCorrect ? '5px solid #7f9ab7' : '5px solid #42424d';
         img.style.borderRadius = '20px';
     }
 

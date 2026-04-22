@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Результат</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body>
 <div class="result-container">
-
     <h1 class="result-title"
         th:classappend="${isCorrect} ? 'correct' : 'incorrect'"
         th:text="${isCorrect} ? 'Правильно!' : 'Неправильно'">
